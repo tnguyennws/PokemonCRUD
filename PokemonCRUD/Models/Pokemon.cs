@@ -8,7 +8,6 @@ namespace PokemonCRUD.Models
         public int Id { get; set; }
 
         [Range(1, 1000)]
-        [DataType(DataType.Currency)]
         [Required]
         public int IdPokedex { get; set; }
 
@@ -25,7 +24,6 @@ namespace PokemonCRUD.Models
         public string Type2 { get; set; }
 
         [Range(1, 100)]
-        [DataType(DataType.Currency)]
         [Required]
         public int Evolution { get; set; }
     }
