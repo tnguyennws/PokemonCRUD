@@ -23,7 +23,7 @@ namespace PokemonCRUD.Models
         [Required]
         public string Type2 { get; set; }
 
-        [Range(1, 100)]
+        [Range(0, 100)]
         [Required]
         public int Evolution { get; set; }
     }
