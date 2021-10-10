@@ -20,9 +20,33 @@ namespace PokemonCRUD.Controllers
         }
 
         // GET: Pokemons
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string pokemonType1, string searchString)
         {
-            return View(await _context.Pokemon.ToListAsync());
+            // Use LINQ to get list of genres.
+            IQueryable<string> genreQuery = from m in _context.Pokemon
+                                            orderby m.Type1
+                                            select m.Type1;
+
+            var pokemons = from m in _context.Pokemon
+                         select m;
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                pokemons = pokemons.Where(s => s.Name.Contains(searchString));
+            }
+
+            if (!string.IsNullOrEmpty(pokemonType1))
+            {
+                pokemons = pokemons.Where(x => x.Type1 == pokemonType1);
+            }
+
+            var pokemonType1VM = new PokemonType1ViewModel
+            {
+                Type1 = new SelectList(await genreQuery.Distinct().ToListAsync()),
+                Pokemons = await pokemons.ToListAsync()
+            };
+
+            return View(pokemonType1VM);
         }
 
         // GET: Pokemons/Details/5
